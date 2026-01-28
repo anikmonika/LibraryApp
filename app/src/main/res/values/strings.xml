@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Simple Library</string>
+    <string name="role_select_title">Pilih Peran</string>
+    <string name="member">Anggota</string>
+    <string name="staff">Petugas</string>
+    <string name="catalog">Katalog</string>
+    <string name="loans">Peminjaman</string>
+    <string name="add_loan">Tambah Peminjaman</string>
+    <string name="return_book">Pengembalian</string>
+    <string name="search_hint">Cari judul/penulis...</string>
+</resources>
