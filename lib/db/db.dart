@@ -128,4 +128,39 @@ class Db {
       await db.insert('books', b);
     }
   }
+
+  Future<void> _seedMoreBooks(Database db) async {
+    // Add more books for existing installations (version upgrade).
+    final moreBooks = [
+      {'title': 'Pemrograman Mobile Modern', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Dasar-dasar UI/UX', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Kotlin untuk Android', 'author': 'Anonim', 'stock': 2},
+      {'title': 'REST API untuk Pemula', 'author': 'Anonim', 'stock': 3},
+      {'title': 'Spring Boot Dasar', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Analisis & Perancangan Sistem', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Manajemen Proyek TI', 'author': 'Anonim', 'stock': 1},
+      {'title': 'Jaringan Komputer Lanjutan', 'author': 'Anonim', 'stock': 1},
+      {'title': 'Keamanan Aplikasi Mobile', 'author': 'Anonim', 'stock': 1},
+      {'title': 'Pemodelan UML Praktis', 'author': 'Anonim', 'stock': 2},
+    ];
+
+    for (final b in moreBooks) {
+      final exists = await _bookExists(db, b['title'] as String);
+      if (!exists) {
+        await db.insert('books', b);
+      }
+    }
+  }
+
+  Future<bool> _bookExists(Database db, String title) async {
+    final rows = await db.query(
+      'books',
+      columns: ['id'],
+      where: 'title = ?',
+      whereArgs: [title],
+      limit: 1,
+    );
+    return rows.isNotEmpty;
+  }
+
 }

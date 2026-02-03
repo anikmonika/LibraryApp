@@ -1,5 +1,5 @@
-name: simple_library_offline
-description: Simple offline library app (Flutter-only) with SQLite, login roles, catalog search A-Z, and loan recording.
+name: library_app
+description: library app with SQLite, login roles, catalog search A-Z, and loan recording.
 publish_to: 'none'
 version: 1.0.0+1
 
