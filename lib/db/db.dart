@@ -21,13 +21,18 @@ class Db {
 
     return openDatabase(
       path,
-      version: 1,
+      version: 2,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
       onCreate: (db, version) async {
         await _createSchema(db);
         await _seed(db);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await _seedMoreBooks(db);
+        }
       },
     );
   }
@@ -95,11 +100,29 @@ class Db {
     // Books
     final books = [
       {'title': 'Belajar Java Dasar', 'author': 'Anonim', 'stock': 3},
+      {'title': 'Java OOP Lanjutan', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Struktur Data dengan Java', 'author': 'Anonim', 'stock': 2},
       {'title': 'Flutter untuk Pemula', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Flutter State Management', 'author': 'Anonim', 'stock': 1},
+      {'title': 'Dart Cookbook', 'author': 'Anonim', 'stock': 2},
       {'title': 'Algoritma & Struktur Data', 'author': 'Anonim', 'stock': 1},
+      {'title': 'Pemrograman Berorientasi Objek', 'author': 'Anonim', 'stock': 2},
       {'title': 'Basis Data MySQL', 'author': 'Anonim', 'stock': 4},
+      {'title': 'SQL untuk Semua', 'author': 'Anonim', 'stock': 3},
+      {'title': 'Normalisasi Database', 'author': 'Anonim', 'stock': 2},
       {'title': 'Clean Code', 'author': 'Robert C. Martin', 'stock': 2},
+      {'title': 'The Clean Coder', 'author': 'Robert C. Martin', 'stock': 1},
+      {'title': 'Refactoring', 'author': 'Martin Fowler', 'stock': 1},
       {'title': 'Design Patterns', 'author': 'GoF', 'stock': 1},
+      {'title': 'Head First Design Patterns', 'author': 'Eric Freeman', 'stock': 2},
+      {'title': 'Software Engineering', 'author': 'Ian Sommerville', 'stock': 1},
+      {'title': 'Testing Java', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Unit Testing with JUnit', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Git & GitHub Praktis', 'author': 'Anonim', 'stock': 3},
+      {'title': 'Android Studio Tips', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Jaringan Komputer Dasar', 'author': 'Anonim', 'stock': 2},
+      {'title': 'Keamanan Aplikasi Web', 'author': 'Anonim', 'stock': 1},
+      {'title': 'Sistem Informasi Perpustakaan', 'author': 'Anonim', 'stock': 2},
     ];
     for (final b in books) {
       await db.insert('books', b);

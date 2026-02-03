@@ -37,6 +37,19 @@ class LibraryService {
     return rows.map((m) => Loan.fromMap(m)).toList();
   }
 
+
+  Future<List<Loan>> listLoansByMember(int memberId) async {
+    final db = await Db.instance.database;
+    final rows = await db.rawQuery('''
+      SELECT l.id, l.member_id, m.name AS member_name, l.borrow_date, l.due_date, l.status
+      FROM loans l
+      JOIN members m ON m.id = l.member_id
+      WHERE l.member_id = ?
+      ORDER BY l.id DESC
+    ''', [memberId]);
+    return rows.map((m) => Loan.fromMap(m)).toList();
+  }
+
   Future<List<LoanItem>> listLoanItems(int loanId) async {
     final db = await Db.instance.database;
     final rows = await db.rawQuery('''
