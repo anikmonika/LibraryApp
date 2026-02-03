@@ -1,0 +1,13 @@
+# Flutter/Dart/Pub
+.dart_tool/
+.buildlog/
+.packages
+.pub/
+.pub-cache/
+build/
+# IDE
+.idea/
+.vscode/
+# OS
+.DS_Store
+Thumbs.db
