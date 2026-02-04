@@ -5,7 +5,8 @@ import '../models/member.dart';
 import '../services/library_service.dart';
 
 class CreateLoanPage extends StatefulWidget {
-  const CreateLoanPage({super.key});
+  final int? preselectedBookId;
+  const CreateLoanPage({super.key, this.preselectedBookId});
 
   @override
   State<CreateLoanPage> createState() => _CreateLoanPageState();
@@ -34,6 +35,13 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
         _members = members;
         _books = books;
         _member = members.isNotEmpty ? members.first : null;
+        final pre = widget.preselectedBookId;
+        if (pre != null) {
+          final b = books.where((x) => x.id == pre).toList();
+          if (b.isNotEmpty && b.first.stock > 0) {
+            _selectedBookIds.add(pre);
+          }
+        }
       });
     } finally {
       setState(() => _loading = false);

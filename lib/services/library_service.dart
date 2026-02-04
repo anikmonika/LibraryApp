@@ -1,4 +1,3 @@
-import 'package:sqflite/sqflite.dart';
 import '../db/db.dart';
 import '../models/book.dart';
 import '../models/member.dart';
@@ -9,6 +8,7 @@ class LibraryService {
   Future<List<Book>> listBooks({String? query}) async {
     final db = await Db.instance.database;
     final q = (query ?? '').trim();
+
     final rows = q.isEmpty
         ? await db.query('books', orderBy: 'title COLLATE NOCASE ASC')
         : await db.query(
@@ -17,7 +17,20 @@ class LibraryService {
             whereArgs: ['%$q%', '%$q%'],
             orderBy: 'title COLLATE NOCASE ASC',
           );
+
     return rows.map(Book.fromMap).toList();
+  }
+
+  Future<Book?> getBookById(int id) async {
+    final db = await Db.instance.database;
+    final rows = await db.query(
+      'books',
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+    if (rows.isEmpty) return null;
+    return Book.fromMap(rows.first);
   }
 
   Future<List<Member>> listMembers() async {
@@ -36,7 +49,6 @@ class LibraryService {
     ''');
     return rows.map((m) => Loan.fromMap(m)).toList();
   }
-
 
   Future<List<Loan>> listLoansByMember(int memberId) async {
     final db = await Db.instance.database;
@@ -79,8 +91,10 @@ class LibraryService {
     return db.transaction<int>((txn) async {
       // Validate stock
       for (final bookId in bookIds) {
-        final rows = await txn.query('books', where: 'id = ?', whereArgs: [bookId], limit: 1);
+        final rows =
+            await txn.query('books', where: 'id = ?', whereArgs: [bookId], limit: 1);
         if (rows.isEmpty) throw Exception('Buku tidak ditemukan (id=$bookId).');
+
         final stock = rows.first['stock'] as int;
         if (stock <= 0) throw Exception('Stok buku habis: ${rows.first['title']}');
       }

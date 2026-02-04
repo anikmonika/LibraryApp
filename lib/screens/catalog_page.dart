@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
 import '../services/library_service.dart';
+import 'book_detail_page.dart';
 
 class CatalogPage extends StatefulWidget {
   final bool readOnly;
@@ -68,6 +69,13 @@ class _CatalogPageState extends State<CatalogPage> {
                       title: Text(b.title),
                       subtitle: Text(b.author),
                       trailing: Chip(label: Text('Stok: ${b.stock}')),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => BookDetailPage(book: b, readOnly: widget.readOnly),
+                          ),
+                        );
+                      },
                     );
                   },
                 );
