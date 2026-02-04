@@ -136,6 +136,7 @@ UI sederhana & konsisten
 9. Test Case (Scenario & Unit)
 9.1 Scenario Testing (Manual)
 
+<img width="1334" height="443" alt="Screenshot 2026-02-04 190255" src="https://github.com/user-attachments/assets/177c5d6c-080b-470d-bee7-bb65096eb991" />
 
 10. Cara Cek Database (SQLite)
 Langkah:
