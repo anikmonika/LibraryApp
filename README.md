@@ -28,13 +28,13 @@ Database	SQLite (offline)
 Tidak menggunakan Java backend, MySQL, API, atau server eksternal.
 
 2.2 Technology Stack
-Layer	Teknologi
-UI	Flutter Material
-State Management	StatefulWidget (sederhana & eksplisit)
-Database	sqflite
-Path DB	path_provider
-Testing	flutter_test
-Build Android	Gradle + Kotlin
+framework = flutter dart
+UI = Flutter Material
+Database = sqflite
+Path DB	= path_provider
+Testing	= flutter_test
+Build Android = Gradle + Kotlin
+
 3. Arsitektur Aplikasi
 3.1 Pola Arsitektur
 Digunakan layered architecture sederhana:
@@ -46,11 +46,6 @@ UI (Screens)
 ├── Database Helper
 │
 └── SQLite Database
-
-Kenapa tidak MVVM penuh?
-- Proyek kecil
-- Fokus ke logika bisnis
-- Lebih mudah dipahami & dinilai
 
 4. Struktur Folder Project
 lib/
@@ -72,38 +67,14 @@ lib/
 └── utils/
     └── date_utils.dart
 
-5. Database Design (ERD)
-5.1 Tabel & Relasi
-- books
-| Field  | Tipe         |
-| ------ | ------------ |
-| id     | INTEGER (PK) |
-| title  | TEXT         |
-| author | TEXT         |
-| stock  | INTEGER      |
-- members
-| Field | Tipe         |
-| ----- | ------------ |
-| id    | INTEGER (PK) |
-| name  | TEXT         |
-- loans
-| Field     | Tipe                |
-| --------- | ------------------- |
-| id        | INTEGER (PK)        |
-| member_id | INTEGER (FK)        |
-| loan_date | INTEGER (timestamp) |
-| due_date  | INTEGER             |
-| status    | TEXT                |
-- loan_items
-| Field   | Tipe         |
-| ------- | ------------ |
-| id      | INTEGER (PK) |
-| loan_id | INTEGER (FK) |
-| book_id | INTEGER (FK) |
+5. Gambar ERD
 
-5.2 Gambar ERD
+<img width="2600" height="1400" alt="erd" src="https://github.com/user-attachments/assets/7956359c-989d-44da-b3ec-f0a42acdf8c6" />
 
 6. Use Case Diagram
+
+<img width="2400" height="1400" alt="use_case" src="https://github.com/user-attachments/assets/29e4f563-33b9-452e-84e1-24d28bdf05ab" />
+
 6.1 Aktor
 Anggota
 Petugas
@@ -114,6 +85,7 @@ Melihat katalog buku
 Mencari buku
 Melihat peminjaman sendiri
 Melihat status overdue
+detail buku
 
 6.3 Use Case Petugas
 Login
